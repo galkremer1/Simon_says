@@ -59,11 +59,13 @@ function initCanvases(cLvl,playerSequence) {
         else {
             if (pCounter === cLvl)
             {
+                console.log(cLvl + ' is done');
                 alert('level is done');
                 level(cLvl+1, playerSequence);
             }
             else {
                 pCounter++;
+                console.log('1Right move. the current pcounter is:' + pCounter);
             }
         }
     }, false);
@@ -77,11 +79,13 @@ function initCanvases(cLvl,playerSequence) {
         else {
             if (pCounter === cLvl)
             {
+                console.log(cLvl + ' is done');
                 alert('level is done');
                 level(cLvl+1 , playerSequence);
             }
             else {
                 pCounter++;
+                console.log('2Right move. the current pcounter is:' + pCounter);
             }
         }
     }, false);
@@ -95,11 +99,14 @@ function initCanvases(cLvl,playerSequence) {
         else {
             if (pCounter === cLvl)
             {
+                console.log(cLvl + ' is done');
                 alert('level is done');
                 level(cLvl+1, playerSequence);
             }
             else {
                 pCounter++;
+                console.log('3Right move. the current pcounter is:' + pCounter);
+
             }
         }
     }, false);
@@ -113,11 +120,13 @@ function initCanvases(cLvl,playerSequence) {
         else {
             if (pCounter === cLvl)
             {
+                console.log(cLvl + ' is done');
                 alert('level is done');
                 level(cLvl+1, playerSequence);
             }
             else {
                 pCounter++;
+                console.log('4Right move. the current pcounter is:' + pCounter);
             }
         }
     }, false);
