@@ -5,7 +5,7 @@ var farRightIsClicked = [];
 
 var currentlevel = 1;
 var lose = false;
-var doneLevel = false;
+var sequence = [];
 
 
 var c = document.getElementById('farLeft');
@@ -44,24 +44,25 @@ function changeColor(canvasName)  {
         }, 200)}, 200);
 }
 
-function initCanvases(cLvl,playerSequence) {
+function initCanvases(cLvl) {
     var pCounter = 1;
     console.log('level is: ' + cLvl);
-    console.log('the sequence is: ' + playerSequence);
+    console.log('the sequence is: ' + sequence);
     console.log('pcounter is: ' + pCounter);
 
     document.getElementById('farLeft').addEventListener('click', function (evt) {
         changeColor(farLeft.canvas);
-        if (playerSequence[pCounter-1] != 1) {
-            alert("wrong!" + playerSequence + 'the counter is ' + pCounter);
+        if (sequence[pCounter-1] != 1) {
+            alert("wrong!" + sequence + 'the counter is ' + pCounter);
             lose = true;
+            return false;
         }
         else {
             if (pCounter === cLvl)
             {
                 console.log(cLvl + ' is done');
                 alert('level is done');
-                level(cLvl+1, playerSequence);
+                return true;
             }
             else {
                 pCounter++;
@@ -72,16 +73,17 @@ function initCanvases(cLvl,playerSequence) {
 
     document.getElementById('left').addEventListener('click', function (evt) {
         changeColor(left.canvas);
-        if (playerSequence[pCounter-1] != 2) {
-            alert("wrong!" + playerSequence + 'the counter is ' + pCounter);
+        if (sequence[pCounter-1] != 2) {
+            alert("wrong!" + sequence + 'the counter is ' + pCounter);
             lose = true;
+            return false;
         }
         else {
             if (pCounter === cLvl)
             {
                 console.log(cLvl + ' is done');
                 alert('level is done');
-                level(cLvl+1 , playerSequence);
+                return true;
             }
             else {
                 pCounter++;
@@ -92,16 +94,17 @@ function initCanvases(cLvl,playerSequence) {
 
     document.getElementById('right').addEventListener('click', function (evt) {
         changeColor(right.canvas);
-        if (playerSequence[pCounter-1] != 3) {
-            alert("wrong!" + playerSequence + 'the counter is ' + pCounter);
+        if (sequence[pCounter-1] != 3) {
+            alert("wrong!" + sequence + 'the counter is ' + pCounter);
             lose = true;
+            return false;
         }
         else {
             if (pCounter === cLvl)
             {
                 console.log(cLvl + ' is done');
                 alert('level is done');
-                level(cLvl+1, playerSequence);
+                return true;
             }
             else {
                 pCounter++;
@@ -113,16 +116,17 @@ function initCanvases(cLvl,playerSequence) {
 
     document.getElementById('farRight').addEventListener('click', function (evt) {
         changeColor(farRight.canvas);
-        if (playerSequence[pCounter-1] != 4) {
-            alert("wrong!" + playerSequence + 'the counter is ' + pCounter);
+        if (sequence[pCounter-1] != 4) {
+            alert("wrong!" + sequence + 'the counter is ' + pCounter);
             lose = true;
+            return false;
         }
         else {
             if (pCounter === cLvl)
             {
                 console.log(cLvl + ' is done');
                 alert('level is done');
-                level(cLvl+1, playerSequence);
+                return true;
             }
             else {
                 pCounter++;
@@ -163,18 +167,20 @@ function playSqc(gameSqc,n) {
     }, (n+1)*500);
 }
 
-function level(lvl, sqc) {
-    sequence = sqc;
+function level(lvl) {
     randomNumber = Math.floor(Math.random()*4+1);
     sequence.push(randomNumber);
     playSqc(sequence,0);
 
    setTimeout(function () {
-        alert('your turn');
-        initCanvases(lvl,sequence);
+       alert('your turn');
+       initCanvases(lvl,sequence);
         console.log(lvl + ' is the level');
     },(lvl+1)*1000);
 }
 
+var startLvl = 1;
 
-level(3, [1,2]);
+sequence = [1,2,3,4]
+level(5);
+
