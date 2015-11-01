@@ -3,184 +3,136 @@ var leftIsClicked = [];
 var rightIsClicked = [];
 var farRightIsClicked = [];
 
-var currentlevel = 1;
+var currentLevel = 1;
 var lose = false;
 var sequence = [];
+var counter = 0;
 
+var cheer = new Audio('sound/win.mp3');
+var wrong = new Audio('sound/wrong.mp3');
+var aSound = new Audio('sound/a.wav')
+var bSound = new Audio('sound/b.wav')
+var cSound = new Audio('sound/c.wav')
+var dSound = new Audio('sound/d.wav')
 
-var c = document.getElementById('farLeft');
-var farLeft = c.getContext("2d");
+var a = document.getElementById('1');
+var farLeft = a.getContext("2d");
 farLeft.fillStyle = "#FF0000";
 farLeft.fillRect(0,0,150,300);
 farLeft.canvas.style.borderColor = 'gray';
 
 
-var d = document.getElementById('left');
-var left = d.getContext("2d");
+var b = document.getElementById('2');
+var left = b.getContext("2d");
 left.fillStyle = 'black';
 left.fillRect(0,0,150,300);
 left.canvas.style.borderColor = 'gray';
 
 
-var e = document.getElementById('right');
-var right = e.getContext('2d');
+var c = document.getElementById('3');
+var right = c.getContext('2d');
 right.fillStyle = 'green'
 right.fillRect(0,0,150,300);
 right.canvas.style.borderColor = 'gray';
 
 
-var f = document.getElementById('farRight');
-var farRight= f.getContext('2d');
+var d = document.getElementById('4');
+var farRight= d.getContext('2d');
 farRight.fillStyle = 'blue';
 farRight.fillRect(0,0,150,300);
 farRight.canvas.style.borderColor = 'gray';
 
 
-function changeColor(canvasName)  {
+function changeColor(canvasName, sound)  {
     setTimeout(function () {
         canvasName.style.borderColor= 'black';
         setTimeout(function () {
             canvasName.style.borderColor = 'gray';
         }, 200)}, 200);
+    sound.play();
 }
 
-function initCanvases(cLvl) {
-    var pCounter = 1;
-    console.log('level is: ' + cLvl);
-    console.log('the sequence is: ' + sequence);
-    console.log('pcounter is: ' + pCounter);
+/*
+function initCanvases() {
 
-    document.getElementById('farLeft').addEventListener('click', function (evt) {
-        changeColor(farLeft.canvas);
-        if (sequence[pCounter-1] != 1) {
-            alert("wrong!" + sequence + 'the counter is ' + pCounter);
-            lose = true;
-            return false;
-        }
-        else {
-            if (pCounter === cLvl)
-            {
-                console.log(cLvl + ' is done');
-                alert('level is done');
-                return true;
-            }
-            else {
-                pCounter++;
-                console.log('1Right move. the current pcounter is:' + pCounter);
-            }
-        }
+    a.addEventListener('click', function () {
+        changeColor(a);
+        endTurn = true;
+        return 1;
     }, false);
-
-    document.getElementById('left').addEventListener('click', function (evt) {
-        changeColor(left.canvas);
-        if (sequence[pCounter-1] != 2) {
-            alert("wrong!" + sequence + 'the counter is ' + pCounter);
-            lose = true;
-            return false;
-        }
-        else {
-            if (pCounter === cLvl)
-            {
-                console.log(cLvl + ' is done');
-                alert('level is done');
-                return true;
-            }
-            else {
-                pCounter++;
-                console.log('2Right move. the current pcounter is:' + pCounter);
-            }
-        }
+    b.addEventListener('click', function () {
+        changeColor(b);
+        endTurn = true;
+        return 2;
     }, false);
-
-    document.getElementById('right').addEventListener('click', function (evt) {
-        changeColor(right.canvas);
-        if (sequence[pCounter-1] != 3) {
-            alert("wrong!" + sequence + 'the counter is ' + pCounter);
-            lose = true;
-            return false;
-        }
-        else {
-            if (pCounter === cLvl)
-            {
-                console.log(cLvl + ' is done');
-                alert('level is done');
-                return true;
-            }
-            else {
-                pCounter++;
-                console.log('3Right move. the current pcounter is:' + pCounter);
-
-            }
-        }
+    c.addEventListener('click', function () {
+        changeColor(c);
+        endTurn = true;
+        return 3;
     }, false);
-
-    document.getElementById('farRight').addEventListener('click', function (evt) {
-        changeColor(farRight.canvas);
-        if (sequence[pCounter-1] != 4) {
-            alert("wrong!" + sequence + 'the counter is ' + pCounter);
-            lose = true;
-            return false;
-        }
-        else {
-            if (pCounter === cLvl)
-            {
-                console.log(cLvl + ' is done');
-                alert('level is done');
-                return true;
-            }
-            else {
-                pCounter++;
-                console.log('4Right move. the current pcounter is:' + pCounter);
-            }
-        }
+    d.addEventListener('click', function () {
+        changeColor(d);
+        endTurn = true;
+        return 4;
     }, false);
 }
+*/
+function isClicked(clicked, color, sound) {
+    if (sequence[counter] === clicked) {
+        if (counter < (currentLevel-1)) {
+            changeColor(color, sound);
+            counter++;
+        }
 
-function playSqc(gameSqc,n) {
-    setTimeout(function () {
-            if (gameSqc[n] === 1) {
-                changeColor(farLeft.canvas);
-                if (n<gameSqc.length) {
-                    playSqc(gameSqc, n+1);
-                }
-            }
-            else if (gameSqc[n] === 2) {
-                changeColor(left.canvas);
-                if (n<gameSqc.length) {
-                    playSqc(gameSqc, n+1);
-                }
-            }
+        else if (counter === (currentLevel-1)) {
+           // cheer.play();
+            changeColor(color, sound);
+            setTimeout(function () {
+                alert('Great. Moving on the next level')}, 400);
+            counter=0;
+            currentLevel++;
+            level();
+            return false;
+        }
+    }
+    else  {
+        wrong.play();
+        alert('Wrong. you lost the game!');
+        return true;
+    }
 
-            else if (gameSqc[n] === 3) {
-                changeColor(right.canvas);
-                if (n<gameSqc.length) {
-                    playSqc(gameSqc, n+1);
-                }
-            }
-
-            else if (gameSqc[n] === 4) {
-                changeColor(farRight.canvas);
-                if (n<gameSqc.length) {
-                    playSqc(gameSqc, n+1);
-                }
-            }
-    }, (n+1)*500);
 }
 
-function level(lvl) {
+function playSqc() {
+    for (m=0; m<sequence.length; m++) {
+            if (sequence[m] === 1) {
+                setTimeout(function() {
+            changeColor(a, aSound); }, (m+1)*600);
+        }
+        else if (sequence[m] === 2) {
+                setTimeout(function() {
+                    changeColor(b, bSound)}, (m+1)*600);
+            }
+        else if (sequence[m] === 3) {
+                setTimeout(function() {
+                    changeColor(c, cSound)}, (m+1)*600);
+            }
+        else if (sequence[m] === 4) {
+                setTimeout(function() {
+                    changeColor(d, dSound)}, (m+1)*600);
+        }
+    }
+    setTimeout(function() {alert('Your turn')}, (m+2)*600);
+}
+
+
+function level() {
     randomNumber = Math.floor(Math.random()*4+1);
     sequence.push(randomNumber);
-    playSqc(sequence,0);
-
-   setTimeout(function () {
-       alert('your turn');
-       initCanvases(lvl,sequence);
-        console.log(lvl + ' is the level');
-    },(lvl+1)*1000);
+    playSqc();
+    console.log(sequence);
 }
 
-var startLvl = 1;
-
-sequence = [1,2,3,4]
-level(5);
-
+//sequence = [1,1,1,1]
+//playSqc();
+level();
