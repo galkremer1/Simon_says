@@ -1,19 +1,15 @@
-var farLeftIsClicked = [];
-var leftIsClicked = [];
-var rightIsClicked = [];
-var farRightIsClicked = [];
-
 var currentLevel = 1;
-var lose = false;
 var sequence = [];
 var counter = 0;
 
-var cheer = new Audio('sound/win.mp3');
 var wrong = new Audio('sound/wrong.mp3');
 var aSound = new Audio('sound/a.wav')
 var bSound = new Audio('sound/b.wav')
 var cSound = new Audio('sound/c.wav')
 var dSound = new Audio('sound/d.wav')
+
+
+// Initializing the canvases
 
 var a = document.getElementById('1');
 var farLeft = a.getContext("2d");
@@ -42,7 +38,9 @@ farRight.fillStyle = 'blue';
 farRight.fillRect(0,0,150,300);
 farRight.canvas.style.borderColor = 'gray';
 
+/////////////////////////////////////////////
 
+//This function gets the canvas name and the sound that needed to be played
 function changeColor(canvasName, sound)  {
     setTimeout(function () {
         canvasName.style.borderColor= 'black';
@@ -52,31 +50,7 @@ function changeColor(canvasName, sound)  {
     sound.play();
 }
 
-/*
-function initCanvases() {
 
-    a.addEventListener('click', function () {
-        changeColor(a);
-        endTurn = true;
-        return 1;
-    }, false);
-    b.addEventListener('click', function () {
-        changeColor(b);
-        endTurn = true;
-        return 2;
-    }, false);
-    c.addEventListener('click', function () {
-        changeColor(c);
-        endTurn = true;
-        return 3;
-    }, false);
-    d.addEventListener('click', function () {
-        changeColor(d);
-        endTurn = true;
-        return 4;
-    }, false);
-}
-*/
 function isClicked(clicked, color, sound) {
     if (sequence[counter] === clicked) {
         if (counter < (currentLevel-1)) {
@@ -92,13 +66,11 @@ function isClicked(clicked, color, sound) {
             counter=0;
             currentLevel++;
             level();
-            return false;
         }
     }
     else  {
         wrong.play();
-        alert('Wrong. you lost the game!');
-        return true;
+        alert('Wrong. you lost the game! You reached level ' +  currentLevel);
     }
 
 }
@@ -133,6 +105,5 @@ function level() {
     console.log(sequence);
 }
 
-//sequence = [1,1,1,1]
-//playSqc();
+
 level();
