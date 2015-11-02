@@ -52,13 +52,13 @@ function changeColor(canvasName, sound)  {
 
 
 function isClicked(clicked, color, sound) {
-    if (sequence[counter] === clicked) {
+    if (sequence[counter] === clicked) { //user has clicked the right panel and has yet to finish the level:
         if (counter < (currentLevel-1)) {
             changeColor(color, sound);
             counter++;
         }
 
-        else if (counter === (currentLevel-1)) {
+        else if (counter === (currentLevel-1)) { //user has clicked the right panel and finished the level:
            // cheer.play();
             changeColor(color, sound);
             setTimeout(function () {
@@ -68,9 +68,9 @@ function isClicked(clicked, color, sound) {
             level();
         }
     }
-    else  {
+    else  { //User had clicked the wrong panel
         wrong.play();
-        alert('Wrong. you lost the game! You reached level ' +  currentLevel);
+        alert('Wrong. you lost the game! You reached level ' +  currentLevel + '.');
     }
 
 }
@@ -100,8 +100,8 @@ function playSqc() {
 
 function level() {
     randomNumber = Math.floor(Math.random()*4+1);
-    sequence.push(randomNumber);
-    playSqc();
+    sequence.push(randomNumber); //push the random number into the sequence
+    playSqc(); //play the sequence
     console.log(sequence);
 }
 
